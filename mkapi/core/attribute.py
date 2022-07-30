@@ -24,7 +24,7 @@ def parse_subscript(x) -> str:
     if isinstance(slice, str):
         return f"{value}[{slice}]"
     else:
-        slice = ", ".join(slice)
+        slice = ", ".join(str(s) for s in slice)
         return f"{value}[{slice}]"
 
 

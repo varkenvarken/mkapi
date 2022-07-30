@@ -4,7 +4,7 @@ import importlib
 import inspect
 from dataclasses import InitVar, dataclass, field, is_dataclass
 from functools import lru_cache
-from typing import Any, Dict, List, Optional, TypeVar, Union
+from typing import Any, Dict, List, Literal, Optional, TypeVar, Union
 
 from mkapi.core import linker, preprocess
 from mkapi.core.attribute import get_attributes
@@ -181,6 +181,8 @@ def to_string(annotation, kind: str = "returns", obj=None) -> str:
     if not hasattr(annotation, "__origin__"):
         return str(annotation).replace("typing.", "").lower()
     origin = annotation.__origin__
+    if origin is Literal:
+        return str(annotation).replace("typing.", "")
     if origin is Union:
         return union(annotation, obj=obj)
     if origin is tuple:
